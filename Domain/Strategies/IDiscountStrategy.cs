@@ -6,6 +6,6 @@ namespace Domain.Strategies
 {
     public interface IDiscountStrategy
     {
-        decimal CalculateDiscount(decimal bookingTotalPrice, int currentPoints, out int pointsToDeduct);
+        DiscountResult CalculateDiscount(DiscountContext discountContext);
     }
 }
