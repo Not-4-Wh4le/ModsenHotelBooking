@@ -36,15 +36,7 @@ namespace Domain.Entities
             LoyaltyTier.Platinum => 0.20m,
             _ => 0.00m
         };
-
-        public decimal CalculateDiscount(
-            decimal bookingTotalPrice, 
-            bool usePoints,
-            IDiscountStrategy discountStrategy,
-            out int pointsToDeduct)  
-            => discountStrategy.CalculateDiscount(bookingTotalPrice, CurrentPoints, out pointsToDeduct);
         
-
         public void SpendPoints(int points)
         {
             if (points < 0)

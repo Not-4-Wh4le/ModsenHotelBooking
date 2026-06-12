@@ -44,9 +44,6 @@ namespace Domain.Entities
             if (checkInDate > checkOutDate)
                 throw new ArgumentException("Date cannot be more than check out date");
 
-            if (checkOutDate < checkInDate)
-                throw new ArgumentException("Date cannot be less than check out date");
-
 
             Id = id;
             UserId = userId;
