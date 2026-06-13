@@ -15,7 +15,7 @@ namespace Domain.Entities
         public bool IsDeleted { get; private set;} = false;
         public DateTimeOffset CreatedAt { get; } = DateTimeOffset.Now;
 
-        public User(Guid id,  string username, string email, string passwordHash, UserRole? role)
+        public User(Guid id,  string username, string email, string passwordHash, UserRole role = UserRole.Customer)
         {
             if (id == Guid.Empty)
                 throw new ArgumentException("Id cannot be empty");
@@ -25,13 +25,12 @@ namespace Domain.Entities
 
             if (String.IsNullOrWhiteSpace(passwordHash))
                 throw new ArgumentException("Invalid password hash");
-
+            
+            Id = id;
+            Email = email;
             ChangeUsername(username);
             ChangePassword(passwordHash);
-            Id = id;
-            Email = email; 
-            if (role.HasValue)
-                ChangeRole(role.Value);
+            ChangeRole(role);
         }
 
         public void ChangeUsername(string username)
