@@ -11,7 +11,7 @@ namespace Application.Common.Interfaces.Repositories
         Task<(IReadOnlyList<Hotel> Items, int TotalCount)> SearchAsync(
             string? city,
             string? country,
-            decimal? minRating,
+            double? minRating,
             int page, 
             int pageSize,
             string sortBy,

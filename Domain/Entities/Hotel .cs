@@ -26,8 +26,8 @@ namespace Domain.Entities
             string city,
             string country,
             string address,
-            double rating,
-            Guid managerId)
+            Guid managerId,
+            double rating = 0.0)
         {
             if (id == Guid.Empty)
                 throw new ArgumentException("Id cannot be empty");
