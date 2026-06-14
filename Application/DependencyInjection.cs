@@ -1,7 +1,10 @@
-﻿using FluentValidation;
+﻿using Application.Common.Behavior;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reflection;
 using System.Text;
 
@@ -13,7 +16,11 @@ namespace Application
         {
             var assembly = Assembly.GetExecutingAssembly();
             
-            services.AddMediatR(conf => conf.RegisterServicesFromAssemblies(assembly));
+            services.AddMediatR(conf =>
+            {
+                conf.RegisterServicesFromAssemblies(assembly);
+                conf.AddBehavior(typeof(IPipelineBehavior<,>), typeof(AuthorizeBehavior<,>));
+            });
 
             services.AddAutoMapper(conf => conf.AddMaps(assembly));
 
