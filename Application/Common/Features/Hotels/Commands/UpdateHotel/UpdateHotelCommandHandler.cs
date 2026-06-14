@@ -17,7 +17,7 @@ namespace Application.Common.Features.Hotels.Commands.UpdateHotel
     {
         public async Task<Result<Guid>> Handle(UpdateHotelCommand request, CancellationToken cancellationToken)
         {
-            var hotel = await hotelRepository.GetById(request.Id, cancellationToken);
+            var hotel = await hotelRepository.GetByIdAsync(request.Id, cancellationToken);
             if (hotel == null)
                 return Result<Guid>.Failure("Hotel not found");
             
@@ -41,7 +41,7 @@ namespace Application.Common.Features.Hotels.Commands.UpdateHotel
                 if (currentUser.Role == nameof(UserRole.Admin) && request.NewManagerId.HasValue)
                 {
                     var newManagerId = request.NewManagerId.Value;
-                    var newManager = await userRepository.GetById(newManagerId, cancellationToken);
+                    var newManager = await userRepository.GetByIdAsync(newManagerId, cancellationToken);
 
                     if(newManager == null)
                         return Result<Guid>.Failure("Manager not found");

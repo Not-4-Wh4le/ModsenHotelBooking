@@ -6,7 +6,7 @@ namespace Application.Common.Interfaces.Repositories
 {
     public interface IRepositoryBase<T> where T : class
     {
-        Task<T?> GetById(Guid id, CancellationToken cancellationToken);
+        Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
         Task AddAsync(T entity, CancellationToken cancellationToken);
         void Update(T entity);
         void Delete(T entity);
