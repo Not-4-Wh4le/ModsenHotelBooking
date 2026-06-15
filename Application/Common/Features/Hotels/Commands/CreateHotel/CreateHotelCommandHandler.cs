@@ -26,6 +26,7 @@ namespace Application.Common.Features.Hotels.Commands.CreateHotel
 
                 hotelManagerId = request.ManagerId.Value;
             }
+
             else
                 hotelManagerId = currentUser.Id!.Value;
             Hotel hotel;
