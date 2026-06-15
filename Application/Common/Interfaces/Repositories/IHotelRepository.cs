@@ -15,7 +15,16 @@ namespace Application.Common.Interfaces.Repositories
             int page, 
             int pageSize,
             string sortBy,
-            bool isDesceding,
+            bool isDescending,
+            CancellationToken cancellationToken);
+
+        Task<(IReadOnlyList<Hotel> Items, int TotalCount)> GetManagedAsync(
+            Guid? managerId,
+            double? minRating,
+            int page,
+            int pageSize,
+            string sortBy,
+            bool isDescending,
             CancellationToken cancellationToken);
     }
 }
