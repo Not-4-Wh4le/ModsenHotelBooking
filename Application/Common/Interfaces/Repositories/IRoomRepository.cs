@@ -7,18 +7,15 @@ namespace Application.Common.Interfaces.Repositories
 {
     public interface IRoomRepository : IRepositoryBase<Room>
     {
-        Task<IReadOnlyList<Guid>> GetAvailableRoomIdsAsync(
-            DateTimeOffset checkIn,
-            DateTimeOffset checkOut,
-            CancellationToken cancellationToken);
-
         Task<(IReadOnlyList<Room> Items, int TotalCount)> GetFilteredCatalogAsync(
-            Guid hotelId,
+            Guid? hotelId,
             string? type,
             int? capacity,
             decimal? minPrice,
             decimal? maxPrice,
-            string? amenitySearch, 
+            string? amenitySearch,
+            DateTimeOffset? checkIn,
+            DateTimeOffset? checkOut,
             int page,
             int pageSize,
             string sortBy,        

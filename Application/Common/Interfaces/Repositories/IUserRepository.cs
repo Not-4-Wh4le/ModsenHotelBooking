@@ -12,6 +12,8 @@ namespace Application.Common.Interfaces
             int page,
             int pageSize,
             CancellationToken cancellationToken);
+        Task<User> GetUserByEmailAsync(string Email, CancellationToken cancellationToken);
+        Task<User> GetUserByUsernameAsync(string Username, CancellationToken cancellationToken);
 
     }
 }

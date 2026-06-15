@@ -7,7 +7,7 @@ namespace Domain.Entities
     public class Hotel
     {
         public Guid Id { get; init; }
-        public String Name { get; private set; } = String.Empty;
+        public string Name { get; private set; } = string.Empty;
         public string City { get; init; }
         public string Country { get; init; }
         public string Address { get; init; }
@@ -26,8 +26,8 @@ namespace Domain.Entities
             string city,
             string country,
             string address,
-            double rating,
-            Guid managerId)
+            Guid managerId,
+            double rating = 0.0)
         {
             if (id == Guid.Empty)
                 throw new ArgumentException("Id cannot be empty");
@@ -63,7 +63,7 @@ namespace Domain.Entities
 
         public void ChangeName(string name)
         {
-            if (String.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Hotel name cannot be empty");
 
             if (name.Length < 6)
