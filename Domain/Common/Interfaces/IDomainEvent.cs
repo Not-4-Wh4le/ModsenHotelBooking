@@ -1,0 +1,12 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Domain.Common.Interfaces
+{
+    public interface IDomainEvent : INotification
+    {
+        public DateTimeOffset Timestamp { get; }
+    }
+}

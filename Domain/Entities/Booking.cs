@@ -1,4 +1,6 @@
-﻿using Domain.Enums;
+﻿using Domain.Common;
+using Domain.Common.Events;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace Domain.Entities
 {
-    public class Booking
+    public class Booking : AggregateRoot
     {
         public Guid Id { get; init; }
         public Guid UserId { get; init; }
@@ -111,6 +113,7 @@ namespace Domain.Entities
                 throw new InvalidOperationException("Only confirmed bookings can be completed.");
 
             BookingStatus = BookingStatus.Completed;
+            AddDomainEvent(new BookingCompletedEvent(DateTimeOffset.Now, UserId, FinalPrice));
         }
         public void CancelBooking()
         {

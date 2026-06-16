@@ -9,6 +9,16 @@ namespace Domain.Entities
 {
     public class LoyaltyProgram
     {
+        public const int SilverPointsThreshold = 1000;
+        public const int GoldPointsThreshold = 5000;
+        public const int PlatinumPointsThreshold = 10000;
+
+        public const decimal BronzeDiscountPercent = 0.00m;
+        public const decimal SilverDiscountPercent = 0.05m;
+        public const decimal GoldDiscountPercent = 0.10m;
+        public const decimal PlatinumDiscountPercent = 0.20m;
+
+        public const decimal BookingFinalPriceToPointsPercent = 0.10m;
         public Guid Id { get; init; }
         public Guid UserId { get; init; }
         public int TotalPoints { get; private set; } = 0;
@@ -30,11 +40,11 @@ namespace Domain.Entities
         }
         public decimal GetTierDiscountPercent() => Tier switch
         {
-            LoyaltyTier.Bronze => 0.00m,
-            LoyaltyTier.Silver => 0.05m,
-            LoyaltyTier.Gold => 0.10m,
-            LoyaltyTier.Platinum => 0.20m,
-            _ => 0.00m
+            LoyaltyTier.Bronze => BronzeDiscountPercent,
+            LoyaltyTier.Silver => SilverDiscountPercent,
+            LoyaltyTier.Gold => GoldDiscountPercent,
+            LoyaltyTier.Platinum => PlatinumDiscountPercent,
+            _ => BronzeDiscountPercent
         };
         
         public void SpendPoints(int points)
@@ -48,13 +58,10 @@ namespace Domain.Entities
             CurrentPoints -= points;
         }
 
-        public void RewardPointsForBooking(Booking booking)
+        public void RewardPointsForBooking(decimal bookingFinalPrice)
         {
-            if (booking.BookingStatus != BookingStatus.Completed)
-                throw new InvalidOperationException("Booking must be completed");
-
-            TotalSpent += booking.TotalPrice;
-            var earnedPoint = (int)(booking.TotalPrice * 0.1m);
+            TotalSpent += bookingFinalPrice;
+            var earnedPoint = (int)(bookingFinalPrice * BookingFinalPriceToPointsPercent);
             TotalPoints += earnedPoint;
             CurrentPoints += earnedPoint;
 
@@ -65,11 +72,10 @@ namespace Domain.Entities
         {
             Tier = TotalPoints switch
             {
-                >= 10000 => LoyaltyTier.Platinum,
-                >= 5000 => LoyaltyTier.Gold,
-                >= 1000 => LoyaltyTier.Silver,
+                >= PlatinumPointsThreshold => LoyaltyTier.Platinum,
+                >= GoldPointsThreshold => LoyaltyTier.Gold,
+                >= SilverPointsThreshold=> LoyaltyTier.Silver,
                 _ => LoyaltyTier.Bronze
-
             };
         }
     }
