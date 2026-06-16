@@ -58,6 +58,14 @@ namespace Domain.Entities
             CurrentPoints -= points;
         }
 
+        public void RefundPoints(int points)
+        {
+            if (points < 0)
+                throw new ArgumentException("Points to refund cannot be negative");
+
+            CurrentPoints += points;
+        }
+
         public void RewardPointsForBooking(decimal bookingFinalPrice)
         {
             TotalSpent += bookingFinalPrice;

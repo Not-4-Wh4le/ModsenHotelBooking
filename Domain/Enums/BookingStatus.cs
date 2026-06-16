@@ -9,6 +9,7 @@ namespace Domain.Enums
         Created,
         Confirmed,
         Cancelled,
+        CancelationRequest,
         Completed
     }
 }

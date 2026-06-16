@@ -12,7 +12,7 @@ namespace Application.Common.Interfaces.Repositories
             int page,
             int pageSize,
             CancellationToken cancellationToken);
-        Task<(IReadOnlyList<Booking> Items, int TotalCount)> GetByHotelIdAsync(
+        Task<(IReadOnlyList<Booking> Items, int TotalCount)> GetByHotelIdPagedAsync(
             Guid hotelId,
             int page,
             int pageSize,

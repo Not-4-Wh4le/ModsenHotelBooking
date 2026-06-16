@@ -8,5 +8,6 @@ namespace Application.Common.Interfaces.Repositories
     public interface ILoyaltyRepository : IRepositoryBase<LoyaltyProgram>
     {
         Task<LoyaltyProgram?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+        Task CreateOrUpdateAsync(LoyaltyProgram loyaltyProgram, CancellationToken cancellationToken);
     }
 }

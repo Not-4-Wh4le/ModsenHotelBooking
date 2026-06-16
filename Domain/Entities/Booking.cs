@@ -20,6 +20,7 @@ namespace Domain.Entities
         public decimal TotalPrice { get; private set; }
         public decimal FinalPrice => TotalPrice - DiscountAmount;
         public decimal DiscountAmount { get; private set; }
+        public int PointsSpent { get; private set; }
         public BookingStatus BookingStatus { get; private set; } = BookingStatus.Created;
         public bool IsDeleted { get; private set; } = false;
 
@@ -30,7 +31,8 @@ namespace Domain.Entities
             DateTimeOffset checkInDate,
             DateTimeOffset checkOutDate,
             decimal totalPrice,
-            decimal discountAmount
+            decimal discountAmount,
+            int pointsSpent
 
             )
         {
@@ -46,6 +48,8 @@ namespace Domain.Entities
             if (checkInDate > checkOutDate)
                 throw new ArgumentException("Date cannot be more than check out date");
 
+            if (pointsSpent < 0)
+                throw new ArgumentException("Points spent cannot be negative");
 
             Id = id;
             UserId = userId;
@@ -53,7 +57,8 @@ namespace Domain.Entities
             CheckOutDate = checkOutDate;
             CheckInDate = checkInDate;
             TotalPrice = totalPrice;
-            DiscountAmount = discountAmount;  
+            DiscountAmount = discountAmount;
+            PointsSpent = pointsSpent;
         }
 
         public void ExtendStay(DateTimeOffset newCheckOutDate, decimal pricePerNight)
@@ -115,12 +120,29 @@ namespace Domain.Entities
             BookingStatus = BookingStatus.Completed;
             AddDomainEvent(new BookingCompletedEvent(DateTimeOffset.Now, UserId, FinalPrice));
         }
-        public void CancelBooking()
+
+        public void RequestCancelation()
         {
-            if (BookingStatus == BookingStatus.Completed)
-                throw new InvalidOperationException("Cannot cancel an already completed booking");
+            if(BookingStatus != BookingStatus.Created && BookingStatus != BookingStatus.Confirmed)
+                throw new InvalidOperationException("Cannot request cancellation for this booking");
+
+            BookingStatus = BookingStatus.CancelationRequest;
+        }
+        public void ConfirmCancelation()
+        {
+            if (BookingStatus != BookingStatus.CancelationRequest)
+                throw new InvalidOperationException("No cancellation request found");
 
             BookingStatus = BookingStatus.Cancelled;
+            AddDomainEvent(new BookingCancelledEvent(DateTimeOffset.Now, Id, UserId, PointsSpent));
+        }
+
+        public void RejectCancelation()
+        {
+            if (BookingStatus != BookingStatus.CancelationRequest)
+                throw new InvalidOperationException("No cancellation request found");
+
+            BookingStatus = BookingStatus.Confirmed;
         }
 
         public void ConfirmBooking()
