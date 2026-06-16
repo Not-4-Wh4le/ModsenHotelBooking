@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Domain.Common;
+using Domain.Enums;
 using Domain.Strategies;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Domain.Entities
 {
-    public class LoyaltyProgram
+    public class LoyaltyProgram : IEntity
     {
         public const int SilverPointsThreshold = 1000;
         public const int GoldPointsThreshold = 5000;

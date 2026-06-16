@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Domain.Entities
 {
-    public class Hotel
+    public class Hotel : IEntity
     {
         public Guid Id { get; init; }
         public string Name { get; private set; } = string.Empty;

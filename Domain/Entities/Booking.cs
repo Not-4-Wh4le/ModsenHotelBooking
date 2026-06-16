@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Domain.Entities
 {
-    public class Booking : AggregateRoot
+    public class Booking : AggregateRoot, IEntity
     {
         public Guid Id { get; init; }
         public Guid UserId { get; init; }

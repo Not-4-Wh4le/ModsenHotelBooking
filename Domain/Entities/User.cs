@@ -1,11 +1,12 @@
-﻿using Domain.Enums;
+﻿using Domain.Common;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Domain.Entities
 {
-    public class User
+    public class User : IEntity
     {
         public Guid Id { get; init; }
         public string Username { get; private set;} = string.Empty;

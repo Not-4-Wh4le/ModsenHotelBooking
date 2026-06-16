@@ -1,11 +1,12 @@
-﻿using Domain.Enums;
+﻿using Domain.Common;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Domain.Entities
 {
-    public class Room
+    public class Room : IEntity
     {
         public Guid Id { get; init; }
         public int Number { get; private set; }
