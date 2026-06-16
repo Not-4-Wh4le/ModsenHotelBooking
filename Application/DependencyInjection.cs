@@ -29,6 +29,7 @@ namespace Application
             {
                 conf.RegisterServicesFromAssemblies(assembly);
                 conf.AddBehavior(typeof(IPipelineBehavior<,>), typeof(AuthorizeBehavior<,>));
+                conf.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
             });
 
             services.AddAutoMapper(conf => conf.AddMaps(assembly));
