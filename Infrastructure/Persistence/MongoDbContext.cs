@@ -18,7 +18,9 @@ namespace Infrastructure.Persistence
 
             var mongoClient = new MongoClient(mongoUrl);
 
-            database = mongoClient.GetDatabase(mongoUrl.DatabaseName);
+            var databaseName = configuration["DatabaseSettings:DatabaseName"];
+
+            database = mongoClient.GetDatabase(databaseName);
         }
 
         public IMongoCollection<T> GetCollection<T>(string name) => database.GetCollection<T>(name);

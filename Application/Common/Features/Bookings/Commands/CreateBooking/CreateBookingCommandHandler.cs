@@ -13,7 +13,8 @@ namespace Application.Common.Features.Bookings.Commands.CreateBooking
     public class CreateBookingCommandHandler(
         IRoomRepository roomRepository,
         IDiscountStrategyResolver strategyResolver,
-        ILoyaltyRepository loyaltyRepository)
+        ILoyaltyRepository loyaltyRepository,
+        IBookingRepository bookingRepository)
         : IRequestHandler<CreateBookingCommand, Result<Guid>>
     {
         public async Task<Result<Guid>> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
@@ -67,7 +68,8 @@ namespace Application.Common.Features.Bookings.Commands.CreateBooking
             {
                 return Result<Guid>.Failure(ex.Message);
             }
-            
+
+            await bookingRepository.AddAsync(booking, cancellationToken);
             return Result<Guid>.Success(booking.Id);
         }
     }

@@ -37,7 +37,7 @@ namespace Application.Common.Features.Rooms.Queries.SearchRooms
                 .When(q => q.Capacity.HasValue);
 
             RuleFor(q => q.CheckIn)
-                .LessThanOrEqualTo(DateTimeOffset.UtcNow.Date)
+                .GreaterThanOrEqualTo(DateTimeOffset.UtcNow.Date)
                 .WithMessage("Check-in date cannot be in the past")
                 .When(q => q.CheckIn.HasValue);
 

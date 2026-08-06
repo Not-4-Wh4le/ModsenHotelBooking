@@ -17,8 +17,6 @@ namespace Infrastructure.Persistence
 
             BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
-            BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
-
             var conventionPack = new ConventionPack
         {
             new CamelCaseElementNameConvention(),     

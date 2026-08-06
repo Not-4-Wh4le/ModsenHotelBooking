@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application
 {
@@ -23,7 +25,6 @@ namespace Application
             services.AddScoped<IDiscountStrategyFactory, PromoCodeDiscountStrategyFactory>();
             services.AddScoped<IDiscountStrategyFactory, EmptyDicsountStrategyFactory>();
             services.AddScoped<IDiscountStrategyResolver, DiscountStrategyResolver>();
-
             
             services.AddMediatR(conf =>
             {
@@ -31,6 +32,8 @@ namespace Application
                 conf.AddBehavior(typeof(IPipelineBehavior<,>), typeof(AuthorizeBehavior<,>));
                 conf.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
             });
+
+            services.AddScoped<IDomainEventDispathcer, DomainEventDispatcher>();
 
             services.AddAutoMapper(conf => conf.AddMaps(assembly));
 

@@ -60,7 +60,7 @@ namespace Infrastructure.Persistence.Repositories
                     Builders<Booking>.Filter.Ne(b => b.BookingStatus, BookingStatus.Cancelled));
 
                 var bookedRoomIds = await bookingCollection.Find(overlapFilter)
-                    .Project(b => b.Id)
+                    .Project(b => b.RoomId)
                     .ToListAsync(cancellationToken);
 
                 if (bookedRoomIds.Count != 0)
@@ -76,6 +76,7 @@ namespace Infrastructure.Persistence.Repositories
 
             var totalCount = await Collection.CountDocumentsAsync(filter, null, cancellationToken);
             var items = await Collection.Find(filter)
+                .Sort(sort)
                 .Skip((page - 1) * pageSize)
                 .Limit(pageSize)
                 .ToListAsync(cancellationToken);

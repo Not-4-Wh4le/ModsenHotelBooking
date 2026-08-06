@@ -30,7 +30,7 @@ namespace Infrastructure.Persistence.Repositories
         public async Task<User?> GetUserByUsernameAsync(
             string username, CancellationToken cancellationToken)
         {
-            return await Collection.Find(u => u.Email == username).FirstOrDefaultAsync(cancellationToken);
+            return await Collection.Find(u => u.Username == username).FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

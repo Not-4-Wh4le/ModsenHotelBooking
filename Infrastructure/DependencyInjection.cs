@@ -20,12 +20,15 @@ namespace Infrastructure
             services.AddSingleton<MongoDbContext>();
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<DatabaseSeeder>();
 
+            services.AddScoped<IUnitOfWork, MongoUnitOfWork>();
             services.AddScoped<IUserRepository, MongoUserRepository>();
             services.AddScoped<IBookingRepository, MongoBookingRepository>();
             services.AddScoped<ILoyaltyRepository, MongoLoyaltyRepository>();
             services.AddScoped<IRoomRepository, MongoRoomRepository>();
             services.AddScoped<IHotelRepository, MongoHotelRepository>();
+
 
             return services;
         }

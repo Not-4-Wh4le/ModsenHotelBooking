@@ -20,7 +20,7 @@ namespace Application.Common.Features.Rooms.Commands.UpdateRoom
             if (room == null)
                 return Result<Guid>.Failure("Room not found");
             
-            if(!room.IsDeleted)
+            if(room.IsDeleted)
                 return Result<Guid>.Failure("Cannot update a deleted room");
 
             if (currentUser.Role == nameof(UserRole.HotelManager))
